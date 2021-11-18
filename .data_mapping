@@ -1,0 +1,37 @@
+11
+Quick_Sort
+Heap_Sort
+Merge_Sort
+Counting_Sort
+Radix_Sort
+Flash_Sort
+Insertion_Sort
+Shaker_Sort
+Shell_Sort
+Selection_Sort
+Bubble_Sort
+24
+Random_10000 ./data/Random_10000.in
+Random_30000 ./data/Random_30000.in
+Random_50000 ./data/Random_50000.in
+Random_100000 ./data/Random_100000.in
+Random_300000 ./data/Random_300000.in
+Random_500000 ./data/Random_500000.in
+Sorted_10000 ./data/Sorted_10000.in
+Sorted_30000 ./data/Sorted_30000.in
+Sorted_50000 ./data/Sorted_50000.in
+Sorted_100000 ./data/Sorted_100000.in
+Sorted_300000 ./data/Sorted_300000.in
+Sorted_500000 ./data/Sorted_500000.in
+Reverse_10000 ./data/Reverse_10000.in
+Reverse_30000 ./data/Reverse_30000.in
+Reverse_50000 ./data/Reverse_50000.in
+Reverse_100000 ./data/Reverse_100000.in
+Reverse_300000 ./data/Reverse_300000.in
+Reverse_500000 ./data/Reverse_500000.in
+NearlySorted_10000 ./data/NearlySorted_10000.in
+NearlySorted_30000 ./data/NearlySorted_30000.in
+NearlySorted_50000 ./data/NearlySorted_50000.in
+NearlySorted_100000 ./data/NearlySorted_100000.in
+NearlySorted_300000 ./data/NearlySorted_300000.in
+NearlySorted_500000 ./data/NearlySorted_500000.in
