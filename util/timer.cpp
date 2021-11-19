@@ -7,5 +7,5 @@ void Timer::start() {
 }
 
 double Timer::stop() {
-	return (clock() - Timer::offset) / 1000;
+	return (clock() - Timer::offset) / CLOCKS_PER_SEC;
 }
