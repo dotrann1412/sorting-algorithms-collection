@@ -1,4 +1,4 @@
-# Implementation of 12 sort algorthms wiht C/C++
+# Implementation of 11 sort algorthms wiht C/C++
 
 # File:
 - sort.h: declare prototype of the function.
