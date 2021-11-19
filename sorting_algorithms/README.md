@@ -1,7 +1,7 @@
-# Imlenmentation of 12 sort algorthms wiht C/C++
+# Implementation of 11 sort algorthms wiht C/C++
 
 # File:
-- sort.h: prototype of function.
+- sort.h: declare prototype of the function.
 - sort.cpp: sort function with no comparison tracking.
 - _sort.cpp: sort function with comparison tracking (use of statistic).
 
