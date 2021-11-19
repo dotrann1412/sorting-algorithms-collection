@@ -9,8 +9,8 @@
 (2 files sort.cpp and _sort.cpp are the same)
 - selection_sort
 - insertion_sort
-- bubble_sort: tracking last 
-- shaker_sort: tracking last swapped
+- bubble_sort: tracking the last swap
+- shaker_sort: tracking the last swap
 - shell_sort
 - heap_sort
 - merge_sort
