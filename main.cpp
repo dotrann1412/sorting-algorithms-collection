@@ -34,8 +34,6 @@ void read_data(vector<pair<string, string>>& data_file,
 	int n; config_file >> n;
 	algo.assign(n, "");
 	config_file >> algo;
-	for(auto& x: algo) 
-		_replace(x, '_', ' ');
 	
 	int m; config_file >> m;
 	data_file.assign(m, pair<string, string>("", ""));
@@ -46,32 +44,35 @@ void read_data(vector<pair<string, string>>& data_file,
 	config_file.close();
 }
 
-int* get_array(string file) {
-	fstream f(file.c_str(), ios::in);
-	
-	int n; f >> n;
-	int* a = new int[n];
-	for(int i = 0; i < n; f >> a[i], ++i);
-	f.close();
-	return a;
+void printArray(int* begin, int* end, ostream& s) {
+	for(int* i = begin; i < end; ++i) s << *i << ' ';
+		s << '\n';
 }
 
-void statistic(vector<pair<string, string>>& data_file,
-	vector<string>& algo) {
+void statistic() {
+	vector<pair<string, string>> data_file;
+	vector<string> algo;
+
+	read_data(data_file, algo);
+	cerr << algo << '\n';
 	fstream statistic_result("./result/statistic_result.csv", ios::out);
+
 	int row = 1;
-	
 	statistic_result << fixed << setprecision(6);
-	statistic_result << "Num,Sort Algorithms Name";
+	cout << fixed << setprecision(6);
+
+	statistic_result << "Num,Algorithms";
 
 	string trash;
 	for(auto& x: data_file) 
 		statistic_result << "," << x.first;
 	statistic_result << "\n";
 	for(auto x: algo) {
-		statistic_result << row++ << "," << x;
+		string _x = x;
+		_replace(_x, '-', ' ');
+		statistic_result << row++ << "," << _x;
 		cout << x << '\n';
-		void (*_sort)(int*, int*) = parse(x);
+		void (*_sort)(int*, int*, long long&) = _parse(x);
 		for(auto y: data_file) {
 			stringstream ss;
 			ss << y.first; ss >> trash;
@@ -79,7 +80,8 @@ void statistic(vector<pair<string, string>>& data_file,
 
 			int* a = get_array(y.second);
 			Timer::start();
-			_sort(a, a + n);
+			long long cmpCount = 0;
+			_sort(a, a + n, cmpCount);
 			double st = Timer::stop();
 
 			bool ck = true;
@@ -92,29 +94,40 @@ void statistic(vector<pair<string, string>>& data_file,
 
 			delete[] a;
 
-			statistic_result << "," << st << (ck ? "" : "#");
+			statistic_result << "," << st << "-" << cmpCount << (ck ? "" : "#");
 			statistic_result.flush();
-			cout << '\t' << y.first << ": " << st << " (s)" << (ck ? "" : "#") << '\n';
+
+			cout << '\t' << y.first << ": " << st << (ck ? "" : "#") << " (s) - cmp: " << cmpCount << '\n';
 			cout.flush();
+
 		}
 		statistic_result << "\n";
 	}
+
 	statistic_result.close();
+	std::cerr << "Statistic done!" << '\n';
+}
+
+void query_processes() {
+
 }
 
 int main(int argc, char** argv) {
-	srand(time(nullptr));
 	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-	vector<pair<string, string>> data_file;
-	vector<string> algo;
-	
 	vector<string> command;
-	for(int i = 1; i < argc; ++i)
+	
+	for(int i = 0; i < argc; ++i)
 		command.push_back(string(argv[i]));
 
-	read_data(data_file, algo);
-	statistic(data_file, algo);
+	if(command[1] == "--statistic") {
+		statistic();
+		//use to run everythings with all data file in .data_mapping
+	} else if(command[1] == "--rebuild-data") {
+		system(string("repair " + command[2]).c_str());
+	} else {
 
-	std::cerr << "statistic done!" << '\n';
+	}
 	return 0;
 }
+
+
