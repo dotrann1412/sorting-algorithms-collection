@@ -1,5 +1,4 @@
 #include "func.h"
-#include <fstream>
 
 void _replace(std::string& s, char src, char dest) {
 	for(char& c: s) 
