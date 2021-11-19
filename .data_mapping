@@ -1,15 +1,15 @@
 11
-Quick_Sort
-Heap_Sort
-Merge_Sort
-Counting_Sort
-Radix_Sort
-Flash_Sort
-Insertion_Sort
-Shaker_Sort
-Shell_Sort
-Selection_Sort
-Bubble_Sort
+shell-sort
+quick-sort
+counting-sort
+merge-sort
+heap-sort
+radix-sort
+flash-sort
+insertion-sort
+shaker-sort
+bubble-sort
+selection-sort
 24
 Random_10000 ./data/Random_10000.in
 Random_30000 ./data/Random_30000.in

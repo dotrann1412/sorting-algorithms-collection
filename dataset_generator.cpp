@@ -22,7 +22,19 @@ template <class T> std::ostream &operator << (std::ostream &s, std::vector<T> &a
 	return s;
 }
 
-void generate() {
+void prepare_for_remapping() {
+	fstream f(".data_mapping", ios::in);
+	fstream f_tmp(".data_mapping.tmp", ios::out);
+	if(!f.eof()) {
+		int n; f >> n;
+		vector<string> a(n); f >> a;
+		f_tmp << n << '\n' << a << '\n';
+	}
+	f.close(), f_tmp.close();
+	remove(".data_mapping"), rename(".data_mapping.tmp", ".data_mapping");
+}
+
+void generate(string folder) {
 	fstream config_file(".config", ios::in);
 	
 	int n;
@@ -37,9 +49,10 @@ void generate() {
 	config_file.close();
 
 	config_file.open(".data_mapping", ios::app);
+	config_file << _type.size() * _size.size() << '\n';
 	for (auto x: _type) {
 		for(auto y: _size) {
-			string dest = "./data/" + x.second + "_" + to_string(y) + ".in";
+			string dest = folder + "/" + x.second + "_" + to_string(y) + ".in";
 			fstream f(dest.c_str(), ios::out);
 			int* a = TestGenerator::generate(y, x.first);
 			f << y <<'\n';
@@ -54,7 +67,14 @@ void generate() {
 	config_file.close();
 }
 
-int main() {
-	generate();
+int main(int argc, char** argv) {
+
+	if(argc != 2) {
+		cerr << "Command not found!" << '\n';
+		return 1;
+	}
+
+	prepare_for_remapping();
+	generate(string(argv[1]));
 	return 0;
 }
