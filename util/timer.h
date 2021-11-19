@@ -1,12 +1,12 @@
 #ifndef TIME_H
 #define TIME_H
 
-#include <time.h>
+#include <ctime>
 
 class Timer
 {
 private:
-	static double offset;
+	static std::clock_t offset;
 public:
 	static void start();
 	static double stop();

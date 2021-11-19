@@ -1,11 +1,11 @@
 #include "timer.h"
 
-double Timer::offset = clock();
+std::clock_t Timer::offset = clock();
 
 void Timer::start() {
 	Timer::offset = clock();
 }
 
 double Timer::stop() {
-	return (clock() - Timer::offset) / CLOCKS_PER_SEC;
+	return 1.0 * (clock() - Timer::offset) / CLOCKS_PER_SEC;
 }

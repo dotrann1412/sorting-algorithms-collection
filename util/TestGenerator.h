@@ -74,11 +74,11 @@ int* TestGenerator::generate(int size, int dataType) {
 	switch (dataType) {
 		case 0:	// ngẫu nhiên
 			return generateRandomData(size);
-		case 1:	// có thứ tự
+		case 2:	// có thứ tự
 			return generateSortedData(size);
-		case 2:	// có thứ tự ngược
+		case 3:	// có thứ tự ngược
 			return generateReverseData(size);
-		case 3:	// gần như có thứ tự
+		case 1:	// gần như có thứ tự
 			return generateNearlySortedData(size);
 	}
 
