@@ -8,6 +8,7 @@
  * email: dotrann.1412@gmail.com
  */
 
+//the basic idea - Reference: Mr.MinhHuy
 void selection_sort(int* begin, int* end) {
 	for (int* i = begin; i < end - 1; ++i) {
 		int* select = i;
@@ -17,6 +18,7 @@ void selection_sort(int* begin, int* end) {
 	}
 }
 
+//the basic idea - Reference: Mr.MinhHuy
 void insertion_sort(int* begin, int* end) {
 	for (int* i = begin + 1; i < end; ++i) {
 		int hold = *i, *j = i;
@@ -40,7 +42,8 @@ void bubble_sort(int* begin, int* end) {
 	}
 }
 
-//
+//expand idea from bubble sort
+//tracking the last swapped
 void shaker_sort(int* begin, int* end) {
 	bool flag = true;
 	while(begin < end) {
@@ -58,7 +61,7 @@ void shaker_sort(int* begin, int* end) {
 			if(lastSwapped == begin) break;
 			begin = lastSwapped;
 		}
-		
+		//if lastSwapped = inital value -> array is sorted -> break
 		flag = 1 - flag;
 	}
 }
@@ -68,8 +71,9 @@ void shaker_sort(int* begin, int* end) {
 void shell_sort(int* begin, int* end) {
 	int n = end - begin;
 	for(int gap = n / 2; gap; gap /= 2) {
-		//use insertion with step = gap to sort all sublist of array using insertion sort
-		//idx: [0..10], gap = 2: -> 2 sublists: 0 2 4 6 8 10 and 1 3 5 7 9 
+		//use insertion with step = gap to sort all sublist of array using 
+		//insertion sort
+		//ex: idx = [0..10] and gap = 2: -> 2 sublists: 0 2 4 6 8 10 and 1 3 5 7 9 
 		for(int* i = begin + gap; i < end; ++i) {
 			int hold = *i, *j = i;
 			for(;j >= begin + gap &&  hold < *(j - gap); j -= gap)
@@ -95,7 +99,7 @@ void heap_sort(int* a, int* end) {
 	int n = end - a;
 	//this step used to build max heap
 	//we start from n / 2 because half of the last array is a natural heap
-	for(int i = n / 2; i >= 0; --i)
+	for(int i = n / 2 - 1; i >= 0; --i)
 		heapify(a, n, i);
 	
 	for(int i = n - 1; i > 0; --i) {
@@ -198,7 +202,7 @@ void radix_sort(int* begin, int* end, int k = 30) {
 	//exactly 0 or 1 element
 	int* iter = begin - 1;
 	for(int* i = begin; i < end; ++i)
-		if (!(*i >> k & 1)) _swap(*++iter, *i); 
+		if (!(*i >> k & 1)) ++iter, _swap(*iter, *i); 
 
 	radix_sort(begin, ++iter, k - 1);
 	radix_sort(iter, end, k - 1);
@@ -207,7 +211,7 @@ void radix_sort(int* begin, int* end, int k = 30) {
 void radix_sort(int* begin, int* end) {
 	int rmsb = 0; //rmsb: right most set bit
 	for(int* i = begin; i < end; ++i)
-		for(int j = 30;i >= 0; --i)
+		for(int j = 30; j >= 0; --j)
 			if(*i >> j & 1) { 
 				//if k'th bit of number *i is 1 -> check and break
 				rmsb = _max(rmsb, j);
