@@ -119,9 +119,8 @@ void merge(int* array, int* a, int n, int* b, int m) {
 		if(a[i] < b[j]) array[i + j] = a[i], ++i;
 		else array[i + j] = b[j], ++j;
 
-	while (i < n || j < m)
-		if(i < n) array[i + j] = a[i], ++i;
-		else array[i + j] = b[j], ++j;
+	while(i < n) array[i + j] = a[i], ++i;
+	while(j < m) array[i + j] = b[j], ++j;
 }
 
 
