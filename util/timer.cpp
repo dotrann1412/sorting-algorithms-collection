@@ -1,11 +1,12 @@
 #include "timer.h"
 
-std::clock_t Timer::offset = clock();
+high_resolution_clock::time_point Timer::offset = high_resolution_clock::now();
 
 void Timer::start() {
-	Timer::offset = clock();
+	Timer::offset = high_resolution_clock::now();
 }
 
 double Timer::stop() {
-	return 1.0 * (clock() - Timer::offset) / CLOCKS_PER_SEC;
+	duration<double> execution_time = duration_cast<duration<double>>(high_resolution_clock::now() - offset);
+	return 1.0 * execution_time.count();
 }
