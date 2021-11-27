@@ -1,1 +1,1 @@
-g++ -std=c++17 -o main ./*.cpp ./*.h ./util/*.cpp ./*.h ./sorting_algorithms/*.cpp ./sorting_algorithms/*.h
+g++ -o main ./*.cpp ./*.h ./util/*.cpp ./*.h ./sorting_algorithms/*.cpp ./sorting_algorithms/*.h -std=c++17

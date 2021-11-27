@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
 		command.push_back(string(argv[i]));
 
 	if(command[1] == "--statistic")
-		statistic();//use to run everythings with all data file in .data_mapping
+		statistic_mode(command[2]);//use to run everythings with all data file in .data_mapping
 	else if(command[1] == "--rebuild-dataset")
 		generate_dataset(command[2]);
 	else if(command[1] == "--help")
