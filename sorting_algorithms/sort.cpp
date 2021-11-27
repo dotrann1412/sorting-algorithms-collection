@@ -45,24 +45,20 @@ void bubble_sort(int* begin, int* end) {
 //expand idea from bubble sort
 //tracking the last swapped
 void shaker_sort(int* begin, int* end) {
-	bool flag = true;
 	while(begin < end) {
 		int *lastSwapped = begin;
-		if(flag) {
-			for(int* i = begin; i < end - 1; ++i)
-				if(*i > *(i + 1)) _swap(*i, *(i + 1)), lastSwapped = i + 1;
+		for(int* i = begin; i < end - 1; ++i)
+			if(*i > *(i + 1)) _swap(*i, *(i + 1)), lastSwapped = i + 1;
 			
-			if(lastSwapped == begin) break;
-			end = lastSwapped;
-		} else {
-			for(int* i = end - 1;  i > begin; --i)
-				if(*i < *(i - 1)) _swap(*i, *(i - 1)), lastSwapped = i;
+		if(lastSwapped == begin) break;
 
-			if(lastSwapped == begin) break;
-			begin = lastSwapped;
-		}
+		end = lastSwapped;
+		for(int* i = end - 1;  i > begin; --i)
+			if(*i < *(i - 1)) _swap(*i, *(i - 1)), lastSwapped = i;
+
+		if(lastSwapped == begin) break;
+		begin = lastSwapped;
 		//if lastSwapped = inital value -> array is sorted -> break
-		flag = 1 - flag;
 	}
 }
 
@@ -106,7 +102,7 @@ void heap_sort(int* a, int* end) {
 		_swap(a[i], a[0]);
 		heapify(a, i, 0);
 	}
-}
+}	
 
 
 //reference: Mr.MinhHuy

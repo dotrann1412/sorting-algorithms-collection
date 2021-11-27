@@ -45,7 +45,7 @@ sort_func_pointer parse(const std::string& s);
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////all of these function used of statistic/////////////////
-///////////////   not recommended use when bench test /////////////////
+///////////////  not recommended use when speed test  /////////////////
 
 typedef void (*_sort_func_pointer)(int*, int*, long long&);
 

@@ -42,24 +42,20 @@ void bubble_sort(int* begin, int* end, long long& cmpCount) {
 
 //expand idea from bubble sort
 void shaker_sort(int* begin, int* end, long long& cmpCount) {
-	bool flag = true;
 	while(++cmpCount && begin < end) {
 		int *lastSwapped = begin;
-		if(++cmpCount && flag) {
-			for(int* i = begin;++cmpCount && i < end - 1; ++i)
-				if(++cmpCount && *i > *(i + 1)) _swap(*i, *(i + 1)), lastSwapped = i + 1;
-			
-			if(++cmpCount && lastSwapped == begin) break;
-			end = lastSwapped;
-		} else {
-			for(int* i = end - 1;++cmpCount && i > begin; --i)
-				if(++cmpCount && *i < *(i - 1)) _swap(*i, *(i - 1)), lastSwapped = i;
-
-			if(++cmpCount && lastSwapped == begin) break;
-			begin = lastSwapped;
-		}
+		for(int* i = begin;++cmpCount && i < end - 1; ++i)
+			if(++cmpCount && *i > *(i + 1)) _swap(*i, *(i + 1)), lastSwapped = i + 1;
 		
-		flag = 1 - flag;
+		if(++cmpCount && lastSwapped == begin) break;
+		end = lastSwapped;
+
+		lastSwapped = end;
+		for(int* i = end - 1;++cmpCount && i > begin; --i)
+			if(++cmpCount && *i < *(i - 1)) _swap(*i, *(i - 1)), lastSwapped = i;
+
+		if(++cmpCount && lastSwapped == end) break;
+		begin = lastSwapped;
 	}
 }
 
