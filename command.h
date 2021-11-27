@@ -17,9 +17,10 @@
 
 void generate_dataset(string folder);
 
-void load_mapping_data(vector<pair<string, string>>& data_file, vector<string>& algo);
+void load_mapping_data(vector<pair<string, string>>& data_file, 
+	vector<string>& algo, string file_config = ".data_mapping");
 
-void statistic();
+void statistic_mode(string file_config);
 
 void help();
 

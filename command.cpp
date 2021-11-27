@@ -1,8 +1,10 @@
 #include "command.h"
 
+#include <thread>
+
 void load_mapping_data(vector<pair<string, string>>& data_file, 
-	vector<string>& algo) {
-	fstream config_file(".data_mapping", ios::in);
+	vector<string>& algo, string file_name) {
+	fstream config_file(file_name, ios::in);
 	
 	int n; config_file >> n;
 	algo.assign(n, "");
@@ -17,41 +19,31 @@ void load_mapping_data(vector<pair<string, string>>& data_file,
 	config_file.close();
 }
 
-void statistic() {
+void statistic_mode(string file_config) {
 	vector<pair<string, string>> data_file;
 	vector<string> algo;
 
-	load_mapping_data(data_file, algo);
-	fstream statistic_result("./result/statistic_result.csv", ios::out);
+	load_mapping_data(data_file, algo, file_config);
+	stringstream ss;
+	ss << fixed << setprecision(6);
 
-	int row = 1;
-	statistic_result << fixed << setprecision(6);
-	cout << fixed << setprecision(6);
-
-	statistic_result << "Num,Algorithms";
-
-	string trash;
-	for(auto& x: data_file) 
-		statistic_result << "," << x.first;
-	statistic_result << "\n";
+	Timer time_machine;
 
 	for(auto x: algo) {
 		string _x = x;
 		_replace(_x, '-', ' ');
-		statistic_result << row++ << "," << _x;
+		ss << _x;
 		cout << x << '\n';
 		void (*_sort)(int*, int*, long long&) = _parse(x);
+
 		for(auto y: data_file) {
-			stringstream ss;
-			ss << y.first; ss >> trash;
-			int n; ss >> n;
+			int n;
+			int* a = get_array(y.second, n);
 
-			int* a = get_array(y.second);
-
-			Timer::start();
+			time_machine.start();
 			long long cmpCount = 0;
 			_sort(a, a + n, cmpCount);
-			double st = Timer::stop();
+			double st = time_machine.getTimeDuration();
 
 			bool ck = true;
 			for(int i = 0; i < n - 1; ++i) {
@@ -63,17 +55,20 @@ void statistic() {
 
 			delete[] a;
 
-			statistic_result << "," << st << "-" << cmpCount << (ck ? "" : "#");
-			statistic_result.flush();
+			//if runtime error -> the result will be include character '#' at last
+			ss << "," << st << "-" << cmpCount << (ck ? "" : "#");
 
 			cout << '\t' << y.first << ": " << st << (ck ? "" : "#") << " (s) - cmp: " << cmpCount << '\n';
 			cout.flush();
 
 		}
-		statistic_result << "\n";
+		ss << "\n";
 	}
 
+	fstream statistic_result("./result/statistic_result.csv", ios::app);
+	statistic_result << ss.str();
 	statistic_result.close();
+
 	std::cerr << "Statistic done!" << '\n';
 }
 
@@ -111,6 +106,8 @@ void comparison_mode(vector<string>& command) {
 	double duration_1, duration_2;
 	long long cmpCount_1 = 0, cmpCount_2 = 0;
 
+	Timer time_machine;
+
 	if(command_size == 5) {
 		int sz;
 		int* a = get_array(command[4], sz);
@@ -119,13 +116,13 @@ void comparison_mode(vector<string>& command) {
 
 		cout << "Input size: " << sz << '\n';
 
-		Timer::start();
+		time_machine.start();
 		_sort_1(a, a + sz, cmpCount_1);
-		duration_1 = Timer::stop();
+		duration_1 = time_machine.getTimeDuration();
 
-		Timer::start();
+		time_machine.start();
 		_sort_2(b, b + sz, cmpCount_2);
-		duration_2 = Timer::stop();
+		duration_2 = time_machine.getTimeDuration();
 
 		delete[] a, b;
 
@@ -157,13 +154,13 @@ void comparison_mode(vector<string>& command) {
 		memcpy(b, a, sz * sizeof(int));
 
 
-		Timer::start();
+		time_machine.start();
 		_sort_1(a, a + sz, cmpCount_1);
-		duration_1 = Timer::stop();
+		duration_1 = time_machine.getTimeDuration();
 
-		Timer::start();
+		time_machine.start();
 		_sort_2(b, b + sz, cmpCount_2);
-		duration_2 = Timer::stop();
+		duration_2 = time_machine.getTimeDuration();
 
 		delete[] a, b;
 	}
@@ -200,6 +197,7 @@ void algorithms_mode(vector<string>& command) {
 	if(command[command_size - 1] == "-time") comparison_tracking = false;
 	else if(command[command_size - 1] == "-comp") time_tracking = false;
 
+	Timer time_machine;
 	double duration = 0;
 
 	if(command_size == 5) {
@@ -214,9 +212,9 @@ void algorithms_mode(vector<string>& command) {
 				printArray(a, a + sz, "input_" + to_string(i + 1) + ".txt");
 				
 				cmpCount = 0; //reset cmpCount
-				Timer::start();
+				time_machine.start();
 				_sort(a, a + sz, cmpCount);
-				duration = Timer::stop();
+				duration = time_machine.getTimeDuration();
 
 				cout << "-----------------------------------------\n";
 				if(time_tracking) cout << "Running time: " << duration << " (s)" << '\n';
@@ -234,9 +232,9 @@ void algorithms_mode(vector<string>& command) {
 			
 
 			cmpCount = 0;
-			Timer::start();
+			time_machine.start();
 			_sort(a, a + sz, cmpCount);
-			duration = Timer::stop();
+			duration = time_machine.getTimeDuration();
 
 			printArray(a, a + sz, "Output.txt");
 			delete[] a;
@@ -267,9 +265,9 @@ void algorithms_mode(vector<string>& command) {
 		int* a = TestGenerator::generate(sz, type_input_order);
 
 		cmpCount = 0;
-		Timer::start();
+		time_machine.start();
 		_sort(a, a + sz, cmpCount);
-		duration = Timer::stop();
+		duration = time_machine.getTimeDuration();
 
 		printArray(a, a + sz, "Output.txt");
 		delete[] a;
