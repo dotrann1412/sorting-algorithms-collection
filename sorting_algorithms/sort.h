@@ -5,10 +5,10 @@
 #include <cstring>
 
 /*
- * all of these sort functions sort the array
+ * all of these sorting functions sort the array
  * with index starts from zeroes
  * and receive the pointer of the first and after last element 
- * of array to use. [first, last)
+ * of array to run. [first, last)
  *
  * the function parse(std::string) return the sort 
  * function with name present under a string;
