@@ -150,7 +150,7 @@ int* partition(int* begin, int* end) {
 	return iter;
 }
 
-//the idea of quick sort is use devide and conquer 
+//the idea of quick sort is use divide and conquer 
 void quick_sort(int* begin, int* end) {
 	if(end - begin <= 1) return;
 	
