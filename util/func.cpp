@@ -56,4 +56,5 @@ void printArray(int* begin, int* end, std::string s) {
 	for(int* i = begin; i < end; ++i)
 		f << *i << ' ';
 	f << '\n';
+	f.close();
 }
