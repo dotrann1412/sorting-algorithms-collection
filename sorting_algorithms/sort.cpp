@@ -8,7 +8,7 @@
  * email: dotrann.1412@gmail.com
  */
 
-//the basic idea - Reference: Mr.MinhHuy
+// the basic idea - Reference: Mr.MinhHuy
 void selection_sort(int* begin, int* end) {
 	for (int* i = begin; i < end - 1; ++i) {
 		int* select = i;
@@ -18,7 +18,7 @@ void selection_sort(int* begin, int* end) {
 	}
 }
 
-//the basic idea - Reference: Mr.MinhHuy
+// the basic idea - Reference: Mr.MinhHuy
 void insertion_sort(int* begin, int* end) {
 	for (int* i = begin + 1; i < end; ++i) {
 		int hold = *i, *j = i;
@@ -28,7 +28,7 @@ void insertion_sort(int* begin, int* end) {
 	}
 }
 
-//basic idea - optimized with check the last time swapped
+// basic idea - optimized with check the last time swapped
 void bubble_sort(int* begin, int* end) {
 	for(int* i = end - 1; i > begin; --i) {
 		int* lastswapped = begin - 1;
@@ -42,8 +42,8 @@ void bubble_sort(int* begin, int* end) {
 	}
 }
 
-//expand idea from bubble sort
-//tracking the last swapped
+// expand idea from bubble sort
+// tracking the last swapped
 void shaker_sort(int* begin, int* end) {
 	while(begin < end) {
 		int *lastSwapped = begin;
@@ -58,18 +58,18 @@ void shaker_sort(int* begin, int* end) {
 
 		if(lastSwapped == begin) break;
 		begin = lastSwapped;
-		//if lastSwapped = inital value -> array is sorted -> break
+		// if lastSwapped = inital value -> array is sorted -> break
 	}
 }
 
-//reference: https://en.wikipedia.org/wiki/Shellsort
-//time: 12:05 PM NOV 17 2021
+// reference: https:// en.wikipedia.org/wiki/Shellsort
+// time: 12:05 PM NOV 17 2021
 void shell_sort(int* begin, int* end) {
 	int n = end - begin;
 	for(int gap = n / 2; gap; gap /= 2) {
-		//use insertion with step = gap to sort all sublist of array using 
-		//insertion sort
-		//ex: idx = [0..10] and gap = 2: -> 2 sublists: 0 2 4 6 8 10 and 1 3 5 7 9 
+		// use insertion with step = gap to sort all sublist of array using 
+		// insertion sort
+		// ex: idx = [0..10] and gap = 2: -> 2 sublists: 0 2 4 6 8 10 and 1 3 5 7 9 
 		for(int* i = begin + gap; i < end; ++i) {
 			int hold = *i, *j = i;
 			for(;j >= begin + gap &&  hold < *(j - gap); j -= gap)
@@ -79,8 +79,8 @@ void shell_sort(int* begin, int* end) {
 	}
 }
 
-//reference: Mr.Phuong
-//but: this is heapify recursion version
+// reference: Mr.Phuong
+// but: this is heapify recursion version
 void heapify(int* a, int n, int k) {
 	if(2 * k >= n) return;
 	int i = 2 * k + 1;
@@ -93,8 +93,8 @@ void heapify(int* a, int n, int k) {
 
 void heap_sort(int* a, int* end) {
 	int n = end - a;
-	//this step used to build max heap
-	//we start from n / 2 because half of the last array is a natural heap
+	// this step used to build max heap
+	// we start from n / 2 because half of the last array is a natural heap
 	for(int i = n / 2 - 1; i >= 0; --i)
 		heapify(a, n, i);
 	
@@ -105,10 +105,10 @@ void heap_sort(int* a, int* end) {
 }	
 
 
-//reference: Mr.MinhHuy
-//the main idea is use divide and conquer to sort the left side 
-//and right side then merge it 
-//suppose that the array with exactly 1 element is always sorted
+// reference: Mr.MinhHuy
+// the main idea is use divide and conquer to sort the left side 
+// and right side then merge it 
+// suppose that the array with exactly 1 element is always sorted
 void merge(int* array, int* a, int n, int* b, int m) {
 	int i = 0, j = 0;
 	while(i < n && j < m)
@@ -122,7 +122,7 @@ void merge(int* array, int* a, int n, int* b, int m) {
 
 
 void merge_sort(int* begin, int* end) {
-	int n = end - begin; //size of array
+	int n = end - begin; // size of array
 	if(n <= 1) return;
 
 	merge_sort(begin, begin + n / 2);
@@ -135,10 +135,10 @@ void merge_sort(int* begin, int* end) {
 }
 
 
-//this partition function choose a random pivot to reduce the probability of
-//value of the chosen value is the max or min of all element in array
-//and then partition all the element with value less than value of pivot to leftside
-//return pointer point to the index of pivot -> pivot was in the right position in the array
+// this partition function choose a random pivot to reduce the probability of
+// value of the chosen value is the max or min of all element in array
+// and then partition all the element with value less than value of pivot to leftside
+// return pointer point to the index of pivot -> pivot was in the right position in the array
 int* partition(int* begin, int* end) {
 	_swap(*(end - 1), *(begin + rand() % (end - begin - 1) + 1));
 
@@ -150,18 +150,18 @@ int* partition(int* begin, int* end) {
 	return iter;
 }
 
-//the idea of quick sort is use divide and conquer 
+// the idea of quick sort is use divide and conquer 
 void quick_sort(int* begin, int* end) {
 	if(end - begin <= 1) return;
 	
 	int* pivot = partition(begin, end);
 	quick_sort(begin, pivot);
 	quick_sort(pivot + 1, end);
-	//pivot + 1 because the value of pivot is in the right position in the array
+	// pivot + 1 because the value of pivot is in the right position in the array
 }
 
-//idea: Mr.Phuong
-//find max min of array to reduce memory usage of algorithms in some special case
+// idea: Mr.Phuong
+// find max min of array to reduce memory usage of algorithms in some special case
 void counting_sort(int* begin, int* end) {
 	int mn = *begin, mx = *begin;
 
@@ -185,16 +185,16 @@ void counting_sort(int* begin, int* end) {
 }
 
 
-//this radix_sort version is sort the number in base 2
-//->dont need to define another function to get the k'th ditgit of number, ...
-//just use to sort the positive integer array
+// this radix_sort version is sort the number in base 2
+// ->dont need to define another function to get the k'th ditgit of number, ...
+// just use to sort the positive integer array
 void radix_sort(int* begin, int* end, int k = 30) {
 	if(k < 0 || end - begin <= 1) return;
 
-	//arrange all element with k'th bit = 0 to the left side
-	//then use recursion to sort all the element in the left side, and the right side
-	//base on (k - 1)'th bit until k return to zero or the array's size have 
-	//exactly 0 or 1 element
+	// arrange all element with k'th bit = 0 to the left side
+	// then use recursion to sort all the element in the left side, and the right side
+	// base on (k - 1)'th bit until k return to zero or the array's size have 
+	// exactly 0 or 1 element
 	int* iter = begin - 1;
 	for(int* i = begin; i < end; ++i)
 		if (!(*i >> k & 1)) ++iter, _swap(*iter, *i); 
@@ -204,25 +204,25 @@ void radix_sort(int* begin, int* end, int k = 30) {
 }
 
 void radix_sort(int* begin, int* end) {
-	int rmsb = 0; //rmsb: right most set bit
+	int rmsb = 0; // rmsb: right most set bit
 	for(int* i = begin; i < end; ++i)
 		for(int j = 30; j >= 0; --j)
 			if(*i >> j & 1) { 
-				//if k'th bit of number *i is 1 -> check and break
+				// if k'th bit of number *i is 1 -> check and break
 				rmsb = _max(rmsb, j);
 				break;
 			}
 
 	radix_sort(begin, end, rmsb);
-	//to return as a function pointer with format void(int*, int*) instead of void(int*, int*, int)
+	// to return as a function pointer with format void(int*, int*) instead of void(int*, int*, int)
 }
 
 
-//reference: idea from Mr.Phuong - pointer only version
+// reference: idea from Mr.Phuong - pointer only version
 void flash_sort(int* begin, int* end) {
 	int mx = *begin, mn = *begin;
 
-	//Mr.Phuong said 0.43 is the best value for this algorithm
+	// Mr.Phuong said 0.43 is the best value for this algorithm
 	int layers_count = 0.43 * (end - begin);
 	
 	for(int* i = begin;i < end; ++i)
@@ -231,22 +231,22 @@ void flash_sort(int* begin, int* end) {
 	int* layer = new int[layers_count];
 	memset(layer, 0x00, layers_count * sizeof(int));
 
-	//return level of the element with value = *element
+	// return level of the element with value = *element
 	auto level = [&](int k) -> int {
 		return (1.0 * (k - mn) / (mx - mn)) * (layers_count - 1);
 	};
 	
-	//statistic how many element 
+	// statistic how many element 
 	for(int* i = begin; i < end; ++i)
 		layer[level(*i)]++;
 
-	//find position of last element of each layer
+	// find position of last element of each layer
 	for(int i = 1; i < layers_count; ++i) 
 		layer[i] += layer[i - 1];
 	
 	int *idx = begin;
 	while(idx < end - 1) {
-		//rerange elements overall layers
+		// rerange elements overall layers
 		while(idx < end - 1 
 			&& idx - begin > layer[level(*idx)] - 1)
 			++idx;
@@ -256,11 +256,11 @@ void flash_sort(int* begin, int* end) {
  		while(idx - begin != layer[level(*idx)] - 1)
 			_swap(*idx, begin[--layer[level(*idx)]]);
 
-		//idx return in the correct position --> decreasing the last element of layer *idx;
+		// idx return in the correct position --> decreasing the last element of layer *idx;
 		--layer[level(*idx)]; ++idx;
 	}
 
-	//use insertion sort to rerange elements on every layers
+	// use insertion sort to rerange elements on every layers
 	insertion_sort(begin, end);
 	delete[] layer;
 }

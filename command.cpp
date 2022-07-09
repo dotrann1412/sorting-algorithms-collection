@@ -55,7 +55,7 @@ void statistic_mode(string file_config) {
 
 			delete[] a;
 
-			//if runtime error -> the result will be include character '#' at last
+			// if runtime error -> the result will be include character '#' at last
 			ss << "," << st << "-" << cmpCount << (ck ? "" : "#");
 
 			cout << '\t' << y.first << ": " << st << (ck ? "" : "#") << " (s) - cmp: " << cmpCount << '\n';
@@ -126,8 +126,8 @@ void comparison_mode(vector<string>& command) {
 
 		delete[] a, b;
 
-	} else { //command 5
-		//load configuration setting 
+	} else { // command 5
+		// load configuration setting 
 		fstream file_config(".config", ios::in);
 		int config_size; file_config >> config_size;
 		vector<pair<string, string>> config(config_size);
@@ -181,7 +181,7 @@ void algorithms_mode(vector<string>& command) {
 		return;
 	}
 
-	//load configuration setting 
+	// load configuration setting 
 	fstream file_config(".config", ios::in);
 	int config_size; file_config >> config_size;
 	vector<pair<string, string>> config(config_size);
@@ -191,7 +191,7 @@ void algorithms_mode(vector<string>& command) {
 	_replace(command[2], '-', ' ');
 	cout << "Algorithm: " << command[2] << '\n';
 
-	//use for config output parameter
+	// use for config output parameter
 	bool time_tracking = true, comparison_tracking = true;
 	
 	if(command[command_size - 1] == "-time") comparison_tracking = false;
@@ -201,7 +201,7 @@ void algorithms_mode(vector<string>& command) {
 	double duration = 0;
 
 	if(command_size == 5) {
-		if(isInteger(command[3])) { //command 3
+		if(isInteger(command[3])) { // command 3
 			int sz = parseInt(command[3]);
 			cout << "Input size: " << sz << '\n';
 
@@ -211,7 +211,7 @@ void algorithms_mode(vector<string>& command) {
 
 				printArray(a, a + sz, "input_" + to_string(i + 1) + ".txt");
 				
-				cmpCount = 0; //reset cmpCount
+				cmpCount = 0; // reset cmpCount
 				time_machine.start();
 				_sort(a, a + sz, cmpCount);
 				duration = time_machine.getTimeDuration();
@@ -224,7 +224,7 @@ void algorithms_mode(vector<string>& command) {
 			} 
 
 			return;	
-		} else { //command 1
+		} else { // command 1
 			int sz = 0;
 			int* a = get_array(command[3], sz);
 			cout << "Input file: " << command[3] << '\n';
@@ -240,7 +240,7 @@ void algorithms_mode(vector<string>& command) {
 			delete[] a;
 		}
 
-	} else { //command 2
+	} else { // command 2
 		if(!isInteger(command[3])) {
 			cout << "Input size error" << '\n';
 			return;
