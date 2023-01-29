@@ -3,9 +3,7 @@
 ## Status
 
 <p align="center"> 
-
-![Compile](https://github.com/dotrann1412/sorting-algorithms-collection/actions/workflows/execute.yml/badge.svg)
-
+<img src="https://github.com/dotrann1412/sorting-algorithms-collection/actions/workflows/execute.yml/badge.svg"/>
 </p>
 
 
