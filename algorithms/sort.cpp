@@ -9,7 +9,7 @@
  */
 
 // the basic idea - Reference: Mr.MinhHuy
-void selection_sort(int* begin, int* end) {
+void sort::selection_sort(int* begin, int* end) {
 	for (int* i = begin; i < end - 1; ++i) {
 		int* select = i;
 		for(int* j = i + 1; j < end; ++j)
@@ -19,7 +19,7 @@ void selection_sort(int* begin, int* end) {
 }
 
 // the basic idea - Reference: Mr.MinhHuy
-void insertion_sort(int* begin, int* end) {
+void sort::insertion_sort(int* begin, int* end) {
 	for (int* i = begin + 1; i < end; ++i) {
 		int hold = *i, *j = i;
 		for (;j > begin && hold < *(j - 1); --j) 
@@ -29,7 +29,7 @@ void insertion_sort(int* begin, int* end) {
 }
 
 // basic idea - optimized with check the last time swapped
-void bubble_sort(int* begin, int* end) {
+void sort::bubble_sort(int* begin, int* end) {
 	for(int* i = end - 1; i > begin; --i) {
 		int* lastswapped = begin - 1;
 		for(int* j = begin; j < i; ++j) {
@@ -44,7 +44,7 @@ void bubble_sort(int* begin, int* end) {
 
 // expand idea from bubble sort
 // tracking the last swapped
-void shaker_sort(int* begin, int* end) {
+void sort::shaker_sort(int* begin, int* end) {
 	while(begin < end) {
 		int *lastSwapped = begin;
 		for(int* i = begin; i < end - 1; ++i)
@@ -64,7 +64,7 @@ void shaker_sort(int* begin, int* end) {
 
 // reference: https:// en.wikipedia.org/wiki/Shellsort
 // time: 12:05 PM NOV 17 2021
-void shell_sort(int* begin, int* end) {
+void sort::shell_sort(int* begin, int* end) {
 	int n = end - begin;
 	for(int gap = n / 2; gap; gap /= 2) {
 		// use insertion with step = gap to sort all sublist of array using 
@@ -79,19 +79,20 @@ void shell_sort(int* begin, int* end) {
 	}
 }
 
-// reference: Mr.Phuong
-// but: this is heapify recursion version
-void heapify(int* a, int n, int k) {
-	if(2 * k >= n) return;
-	int i = 2 * k + 1;
+void sort::heap_sort(int* a, int* end) {
 
-	if(i < n - 1 && a[i] < a[i + 1]) ++i;
-	if(i < n && a[k] < a[i]) _swap(a[i], a[k]);
-	
-	heapify(a, n, i);
-}
+	// reference: Mr.Phuong
+	// but: this is heapify recursive version
+	static std::function<void(int*, int, int)> heapify = [](int* a, int n, int k) {
+		if(2 * k >= n) return;
+		int i = 2 * k + 1;
 
-void heap_sort(int* a, int* end) {
+		if(i < n - 1 && a[i] < a[i + 1]) ++i;
+		if(i < n && a[k] < a[i]) _swap(a[i], a[k]);
+		
+		heapify(a, n, i);
+	};
+
 	int n = end - a;
 	// this step used to build max heap
 	// we start from n / 2 because half of the last array is a natural heap
@@ -105,25 +106,24 @@ void heap_sort(int* a, int* end) {
 }	
 
 
-// reference: Mr.MinhHuy
-// the main idea is use divide and conquer to sort the left side 
-// and right side then merge it 
-// suppose that the array with exactly 1 element is always sorted
-void merge(int* array, int* a, int n, int* b, int m) {
-	int i = 0, j = 0;
-	while(i < n && j < m)
-		if(a[i] < b[j]) array[i + j] = a[i], ++i;
-		else array[i + j] = b[j], ++j;
-
-	while(i < n) array[i + j] = a[i], ++i;
-	while(j < m) array[i + j] = b[j], ++j;
-}
-
-
-
-void merge_sort(int* begin, int* end) {
+void sort::merge_sort(int* begin, int* end) {
 	int n = end - begin; // size of array
 	if(n <= 1) return;
+
+
+	// reference: Mr.MinhHuy
+	// the main idea is use divide and conquer to sort the left side 
+	// and right side then merge it 
+	// suppose that the array with exactly 1 element is always sorted
+	static std::function<void(int*, int*, int, int*, int)> merge = [](int* array, int* a, int n, int* b, int m) {
+		int i = 0, j = 0;
+		while(i < n && j < m)
+			if(a[i] < b[j]) array[i + j] = a[i], ++i;
+			else array[i + j] = b[j], ++j;
+
+		while(i < n) array[i + j] = a[i], ++i;
+		while(j < m) array[i + j] = b[j], ++j;
+	};
 
 	merge_sort(begin, begin + n / 2);
 	merge_sort(begin + n / 2, end);
@@ -151,7 +151,7 @@ int* partition(int* begin, int* end) {
 }
 
 // the idea of quick sort is use divide and conquer 
-void quick_sort(int* begin, int* end) {
+void sort::quick_sort(int* begin, int* end) {
 	if(end - begin <= 1) return;
 	
 	int* pivot = partition(begin, end);
@@ -162,7 +162,7 @@ void quick_sort(int* begin, int* end) {
 
 // idea: Mr.Phuong
 // find max min of array to reduce memory usage of algorithms in some special case
-void counting_sort(int* begin, int* end) {
+void sort::counting_sort(int* begin, int* end) {
 	int mn = *begin, mx = *begin;
 
 	for (int* i = begin;i < end; ++i)
@@ -184,42 +184,44 @@ void counting_sort(int* begin, int* end) {
 	delete[] count;
 }
 
+void sort::radix_sort(int* begin, int* end) {
+	
+	// this radix_sort version is sort the number in base 2
+	// ->dont need to define another function to get the k'th ditgit of number, ...
+	// just use to sort the positive integer array
+	std::function<void(int*, int*, int)> radix_sort = [&](int* begin, int* end, int k) {
+		if(k < 0 || end - begin <= 1) return;
 
-// this radix_sort version is sort the number in base 2
-// ->dont need to define another function to get the k'th ditgit of number, ...
-// just use to sort the positive integer array
-void radix_sort(int* begin, int* end, int k = 30) {
-	if(k < 0 || end - begin <= 1) return;
+		// arrange all element with k'th bit = 0 to the left side
+		// then use recursion to sort all the element in the left side, and the right side
+		// base on (k - 1)'th bit until k return to zero or the array's size have 
+		// exactly 0 or 1 element
+		int* iter = begin - 1;
+		for(int* i = begin; i < end; ++i)
+			if (!(*i >> k & 1)) ++iter, _swap(*iter, *i); 
 
-	// arrange all element with k'th bit = 0 to the left side
-	// then use recursion to sort all the element in the left side, and the right side
-	// base on (k - 1)'th bit until k return to zero or the array's size have 
-	// exactly 0 or 1 element
-	int* iter = begin - 1;
-	for(int* i = begin; i < end; ++i)
-		if (!(*i >> k & 1)) ++iter, _swap(*iter, *i); 
+		radix_sort(begin, ++iter, k - 1);
+		radix_sort(iter, end, k - 1);
+	};
 
-	radix_sort(begin, ++iter, k - 1);
-	radix_sort(iter, end, k - 1);
-}
-
-void radix_sort(int* begin, int* end) {
 	int rmsb = 0; // rmsb: right most set bit
-	for(int* i = begin; i < end; ++i)
-		for(int j = 30; j >= 0; --j)
+	for(int* i = begin; i < end; ++i) {
+		for(int j = 30; j >= 0; --j) {
 			if(*i >> j & 1) { 
 				// if k'th bit of number *i is 1 -> check and break
 				rmsb = _max(rmsb, j);
 				break;
 			}
-
+		}
+	}
+		
 	radix_sort(begin, end, rmsb);
-	// to return as a function pointer with format void(int*, int*) instead of void(int*, int*, int)
+	// to return as a function pointer with format void(sort::int*, int*) instead of void(sort::int*, int*, int)
 }
 
 
 // reference: idea from Mr.Phuong - pointer only version
-void flash_sort(int* begin, int* end) {
+void sort::flash_sort(int* begin, int* end) {
 	int mx = *begin, mn = *begin;
 
 	// Mr.Phuong said 0.43 is the best value for this algorithm
@@ -265,39 +267,16 @@ void flash_sort(int* begin, int* end) {
 	delete[] layer;
 }
 
-sort_func_pointer parse(const std::string& s) {
-	if(s == "selection-sort")
-		return selection_sort;
-	
-	if(s == "insertion-sort")
-		return insertion_sort;
-	
-	if(s == "shaker-sort")
-		return shaker_sort;
-	
-	if(s == "bubble-sort")
-		return bubble_sort;
-	
-	if(s == "shell-sort")
-		return shell_sort;
-	
-	if(s == "heap-sort")
-		return heap_sort;
-	
-	if(s == "merge-sort")
-		return merge_sort;
-	
-	if(s == "quick-sort")
-		return quick_sort;
-	
-	if(s == "counting-sort")
-		return counting_sort;
-	
-	if(s == "radix-sort")
-		return radix_sort;
-	
-	if(s == "flash-sort")
-		return flash_sort;
-	
-	return nullptr;
-}
+const std::unordered_map<std::string, std::function<void(int*, int*)>> sort::info = {
+	{"Bubble Sort", sort::bubble_sort},
+	{"Selection Sort", sort::selection_sort},
+	{"Insertion Sort", sort::insertion_sort},
+	{"Merge Sort", sort::merge_sort},
+	{"Quick Sort", sort::quick_sort},
+	{"Counting Sort", sort::counting_sort},
+	{"Radix Sort", sort::radix_sort},
+	{"Flash Sort", sort::flash_sort},
+	{"Heap Sort", sort::heap_sort},
+	{"Shell Sort", sort::shell_sort},
+	{"Shaker Sort", sort::shaker_sort}
+};
