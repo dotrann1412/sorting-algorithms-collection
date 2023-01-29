@@ -1,7 +1,7 @@
 #ifndef TEST_GENERATOR_H
 #define TEST_GENERATOR_H
 
-#include "func.h"
+#include "helpers.h"
 
 #include <cmath>
 #include <ctime>

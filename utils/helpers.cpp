@@ -1,4 +1,4 @@
-#include "func.h"
+#include "helpers.h"
 
 void _replace(std::string& s, char src, char dest) {
 	for(char& c: s) 
