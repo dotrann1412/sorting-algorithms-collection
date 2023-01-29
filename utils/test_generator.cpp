@@ -1,5 +1,12 @@
 #include "test_generator.h"
 
+const unordered_map<int, string> TestGenerator::ks_nameMapping = {
+	{0, "Random"},
+	{1, "Nearly Sorted"},
+	{2, "Sorted"},
+	{3, "Reverse"}
+};
+
 int* TestGenerator::generateSortedData(int n) {
 	int* a = new int[n];
 
@@ -60,4 +67,8 @@ int* TestGenerator::generate(int size, int dataType) {
 	}
 
 	return nullptr;
+}
+
+unordered_map<int, string> TestGenerator::getNames() {
+	return ks_nameMapping;
 }

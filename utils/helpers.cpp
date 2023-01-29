@@ -58,3 +58,9 @@ void printArray(int* begin, int* end, std::string s) {
 	f << '\n';
 	f.close();
 }
+
+bool is_sorted(int* first, int* last) {
+	for(int* i = first; i < last - 1; ++i)
+		if(*i > *(i + 1)) return false;
+	return true;
+}
