@@ -7,6 +7,7 @@
 #include "utils/timer.h"
 #include "utils/helpers.h"
 #include <fstream>
+#include<direct.h>
 
 using namespace std;
 
@@ -47,7 +48,7 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	fstream f("./result/result.json", ios::out | ios::binary);
+	fstream f("./result.json", ios::out | ios::binary);
 	f << result;
 	f.close();
 
