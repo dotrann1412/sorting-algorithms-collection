@@ -7,7 +7,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  execute:
 
     runs-on: self-hosted
 
@@ -18,7 +18,7 @@ jobs:
       run: |
         chmod +x ./run.sh && ./run.sh
 
-    - name: Upload logs
+    - name: Upload result
       uses: actions/upload-artifact@v2
       with:
         name: result
