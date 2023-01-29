@@ -7,7 +7,6 @@
 #include "utils/timer.h"
 #include "utils/helpers.h"
 #include <fstream>
-#include<direct.h>
 
 using namespace std;
 
