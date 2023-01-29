@@ -1,5 +1,5 @@
 #include "sort.h"
-#include "../util/func.h"
+#include "../utils/func.h"
 
 /*
  * I'm not copy any of code version on the internet

@@ -1,6 +1,8 @@
 #include "timer.h"
 
-high_resolution_clock::time_point Timer::offset = high_resolution_clock::now();
+Timer::Timer() {
+	Timer::offset = high_resolution_clock::now();
+}
 
 void Timer::start() {
 	Timer::offset = high_resolution_clock::now();
