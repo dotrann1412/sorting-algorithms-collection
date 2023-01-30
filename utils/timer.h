@@ -9,11 +9,12 @@ using namespace std::chrono;
 class Timer
 {
 private:
-	static high_resolution_clock::time_point offset;
+	high_resolution_clock::time_point offset;
 
 public:
-	static void start();
-	static double stop();
+	Timer();
+	void start();
+	double stop();
 };
 
 #endif

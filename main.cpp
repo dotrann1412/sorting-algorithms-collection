@@ -1,39 +1,55 @@
 #include <iostream>
-#include <fstream>
-#include <sstream>
-#include <iomanip>
-
-#include <map>
 #include <vector>
-#include <string>
-
-#include "command.h"
+#include "algorithms/sort.h"
+#include "utils/test_generator.h"
+#include <functional>
+#include <json/json.h>
+#include "utils/timer.h"
+#include "utils/helpers.h"
+#include <fstream>
 
 using namespace std;
 
 int main(int argc, char** argv) {
-	if(argc <= 1) {
-		cerr << "Command not found! Try: " << argv[0] << " --help for more infomation" << '\n';
-		return 1;
+	vector<int> testSizes = {10, 100, 1000, 10000};
+	unordered_map<int, string> testNames = TestGenerator::getNames();
+	unordered_map<string, function<void(int*, int*)> > algorithms = sort::info;
+
+	Json::Value result;
+	Timer timer;
+
+	for (std::pair<int, string> p : testNames) {
+		for (int size : testSizes) {
+			int* a = TestGenerator::generate(size, p.first);
+			result[p.second][to_string(size)]["data"] = Json::arrayValue;
+
+			for (int i = 0; i < size; i++) {
+				result[p.second][to_string(size)]["data"].append(a[i]);
+			}
+
+			for (std::pair<string, function<void(int*, int*)> > p2 : algorithms) {
+				int* b = new int[size];
+				copy(a, a + size, b);
+				
+				timer.start();
+				p2.second(b, b + size);
+				double duration = timer.stop();
+
+				bool check = is_sorted(b, b + size);
+
+				result[p.second][p2.first][to_string(size)]["duration"]= duration;
+				result[p.second][p2.first][to_string(size)]["is_sorted"] = check;
+
+
+				delete[] b;
+			}
+			delete[] a;
+		}
 	}
 
-	cout << fixed << setprecision(6);
-	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-	vector<string> command;
-	
-	for(int i = 0; i < argc; ++i)
-		command.push_back(string(argv[i]));
+	fstream f("./result.json", ios::out | ios::binary);
+	f << result;
+	f.close();
 
-	if(command[1] == "--statistic")
-		statistic_mode(command[2]);//use to run everythings with all data file in .data_mapping
-	else if(command[1] == "--rebuild-dataset")
-		generate_dataset(command[2]);
-	else if(command[1] == "--help")
-		help();
-	else if(argc > 2)
-		query_processes(command);
-	else
-		cerr << "Command not found! Try: " << argv[0] << " --help for more infomation" << '\n';
-	
 	return 0;
 }

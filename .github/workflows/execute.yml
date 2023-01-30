@@ -1,0 +1,25 @@
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: execute
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  execute:
+
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Test algo
+      run: |
+        chmod +x ./run.sh && ./run.sh
+
+    - name: Upload result
+      uses: actions/upload-artifact@v2
+      with:
+        name: result
+        path: result.json

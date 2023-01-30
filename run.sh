@@ -1,1 +1,2 @@
-g++ -std=c++17 -o main main.cpp ./util/func.h ./util/func.cpp ./util/timer.h ./util/timer.cpp ./sorting_algorithms/sort.cpp ./sorting_algorithms/sort.h ./sorting_algorithms/_sort.cpp
+g++ -std=c++17 -o main main.cpp ./utils/timer.cpp ./utils/helpers.cpp ./utils/test_generator.cpp ./algorithms/sort.cpp ./utils/jsoncpp/jsoncpp.cpp -I./utils/jsoncpp
+./main

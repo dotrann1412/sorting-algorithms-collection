@@ -1,5 +1,12 @@
 #include "test_generator.h"
 
+const unordered_map<int, string> TestGenerator::ks_nameMapping = {
+	{0, "Random"},
+	{1, "Nearly Sorted"},
+	{2, "Sorted"},
+	{3, "Reverse"}
+};
+
 int* TestGenerator::generateSortedData(int n) {
 	int* a = new int[n];
 
@@ -53,15 +60,15 @@ int* TestGenerator::generateNearlySortedData(int n) {
 int* TestGenerator::generate(int size, int dataType) {
 
 	switch (dataType) {
-		case 0:	//  ngẫu nhiên
-			return generateRandomData(size);
-		case 2:	//  có thứ tự
-			return generateSortedData(size);
-		case 3:	//  có thứ tự ngược
-			return generateReverseData(size);
-		case 1:	//  gần như có thứ tự
-			return generateNearlySortedData(size);
+		case 0: return generateRandomData(size);
+		case 2: return generateSortedData(size);
+		case 3: return generateReverseData(size);
+		case 1: return generateNearlySortedData(size);
 	}
 
 	return nullptr;
+}
+
+unordered_map<int, string> TestGenerator::getNames() {
+	return ks_nameMapping;
 }
