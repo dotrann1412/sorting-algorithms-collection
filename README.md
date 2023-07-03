@@ -10,7 +10,7 @@
 Implementation of 11 prevalent sorting algorithms.
 
 ## Project structure
-- `main.cpp`: include main function and i/o activities.
+- `main.cpp`: include the main function and i/o activities.
 - `algorithms/*`: algorithms implementation.
 - Files started with a dot `.`: save all configuration data for the program.
 
